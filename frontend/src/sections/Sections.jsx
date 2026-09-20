@@ -434,7 +434,8 @@ export function Contact({ hideSectionHeader } = {}) {
     if (!form.name || !form.email || !form.message) { showToast("Please fill all fields"); return; }
     setSending(true);
     try {
-      const res = await fetch("/api/contact/", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(form) });
+      const API_BASE = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${API_BASE}/api/contact/`, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(form) });
       showToast(res.ok ? "Your connection request has been submitted. I'll connect with you soon!" : "Couldn't reach the server — please try again in a bit.");
       if (res.ok) setForm({ name:"", email:"", message:"" });
     } catch { showToast("Couldn't reach the server — please try again in a bit."); }
