@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/manashmadhukartiwari/Desktop/Manash Projects/REAL PORTFOLIO/manash-full-project/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(kill 69743)"
+    ]
+  }
+}

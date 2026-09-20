@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green:   #433bff;   /* kept var name so nothing else needs renaming — now the accent blue */
+  --green-l: #7a6bff;
+  --gold:    #dedcff;
+  --water:   #2f27ce;
+  --bg1:     #050315;
+  --bg2:     #0a0824;
+  --bg3:     #0d0b2b;
+  --bg4:     #110e38;
+  --cream:   #fbfbfe;
+  --muted:   #7d79a6;
+  --border:  rgba(222,220,255,0.12);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg1);color:var(--cream);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg1)}
+::-webkit-scrollbar-thumb{background:var(--green)}
+
+/* ── Blink cursor ── */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.animate-blink{animation:blink 1s step-end infinite}
+
+/* ── Marquee ── */
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.animate-marquee{animation:marquee 28s linear infinite}
+
+/* ── Water flow gradient ── */
+@keyframes waterFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-water {
+  background-size: 200% 200%;
+  animation: waterFlow 8s ease infinite;
+}
+
+/* ── Drift (gentle organic float) ── */
+@keyframes drift {
+  0%,100% { transform: translateY(0)   translateX(0); }
+  33%      { transform: translateY(-14px) translateX(9px); }
+  66%      { transform: translateY(7px)  translateX(-7px); }
+}
+.animate-drift { animation: drift 7s ease-in-out infinite; }
+
+/* ── Ripple on hover ── */
+@keyframes ripple {
+  0%   { transform: scale(0);  opacity: 0.45; }
+  100% { transform: scale(3.5);opacity: 0; }
+}
+.ripple-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid var(--green);
+  animation: ripple 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.ripple-ring:nth-child(2) { animation-delay: 0.8s; }
+.ripple-ring:nth-child(3) { animation-delay: 1.6s; }
+
+/* ── Shimmer sweep ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(67,59,255,0.25) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ── Leaf spin ── */
+@keyframes leafSpin {
+  0%   { transform: rotate(0deg)   scale(1); }
+  50%  { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+.animate-leaf { animation: leafSpin 12s linear infinite; }
+
+/* ── Wave underline ── */
+@keyframes waveUnderline {
+  0%,100% { clip-path: inset(0 100% 0 0); }
+  100%     { clip-path: inset(0 0 0 0); }
+}
+
+
+/* --- new: blob background + spotlight glow (add to src/index.css) --- */
+@keyframes blob {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-40px) scale(1.08); }
+  66% { transform: translate(-25px,25px) scale(0.95); }
+}
+.animate-blob { animation: blob 20s ease-in-out infinite; }
+.animate-blob-slow { animation: blob 26s ease-in-out infinite; }
+.animate-blob-slower { animation: blob 32s ease-in-out infinite; }
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+.text-shine {
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+/* ── Gaming HUD / game-animation set ── */
+@keyframes scanline {
+  0%   { transform: translateY(-120%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+.animate-scanline { animation: scanline 3.2s linear infinite; }
+
+@keyframes hudPulse {
+  0%,100% { opacity: 0.35; }
+  50%     { opacity: 1; }
+}
+.animate-hud-pulse { animation: hudPulse 2s ease-in-out infinite; }
+
+@keyframes glitchShift {
+  0%,100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+  20%     { clip-path: inset(20% 0 55% 0); transform: translate(-2px,1px); }
+  40%     { clip-path: inset(55% 0 10% 0); transform: translate(2px,-1px); }
+  60%     { clip-path: inset(10% 0 65% 0); transform: translate(-1px,1px); }
+  80%     { clip-path: inset(75% 0 5% 0);  transform: translate(1px,-1px); }
+}
+.glitch-r { animation: glitchShift 2.6s steps(1,end) infinite; }
+.glitch-b { animation: glitchShift 2.6s steps(1,end) infinite reverse; }
+
+@keyframes barFill {
+  from { width: 0%; }
+}
+.animate-bar-fill { animation: barFill 1.4s cubic-bezier(.16,1,.3,1) forwards; }
+
+@keyframes blipDot {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(67,59,255,0.6); }
+  50%     { opacity: 0.5; box-shadow: 0 0 0 6px rgba(67,59,255,0); }
+}
+.animate-blip { animation: blipDot 1.6s ease-in-out infinite; }
