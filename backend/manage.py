@@ -1,7 +1,7 @@
 """
 Manash Madhukar Portfolio — Django Backend
 Saves contact form submissions to contact_submissions.xlsx
-AND emails a notification to manas20tiwary@gmail.com on every submission.
+AND emails a notification to manastiwary2067@gmail.com on every submission.
 
 Run:
     cd backend
@@ -60,6 +60,17 @@ NOTIFY_EMAIL = "manastiwary2067@gmail.com"
 #      EMAIL_HOST_PASSWORD  -> a 16-character Gmail "App Password" (not your normal password)
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "manas20tiwary@gmail.com")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+
+# ── Fix for macOS "CERTIFICATE_VERIFY_FAILED" when sending email ──
+#    Some Python installs on Mac (and some Linux setups) don't have access to
+#    the system's root certificates, so any TLS connection — including Gmail
+#    SMTP — fails to verify. Pointing Python at certifi's bundled certs fixes
+#    this permanently without needing to set anything in the terminal.
+try:
+    import certifi
+    os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+except ImportError:
+    pass  # certifi not installed — run: pip install certifi
 
 # ── Django config ─────────────────────────────────────────────────────────────
 if not settings.configured:
@@ -258,6 +269,10 @@ urlpatterns = [
     path("api/submissions/", submissions_view),
     path("api/health/",      health_view),
 ]
+
+# ── WSGI app for production servers (gunicorn on Render uses this) ─────────────
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 
 # ── Entry point ────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
